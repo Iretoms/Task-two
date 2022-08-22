@@ -1,6 +1,7 @@
 const initialState = {
   isLoading: true,
   info: [],
+  total:{}
 };
 
 const covidReducer = (state = initialState, action) => {
@@ -13,7 +14,8 @@ const covidReducer = (state = initialState, action) => {
     case "FETCHED_INFO":
       return {
         isLoading: false,
-        info: action.payload,
+        info: action.payload.info,
+        total: action.payload.total
       };
     default:
       return state;
