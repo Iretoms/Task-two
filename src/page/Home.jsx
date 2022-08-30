@@ -11,28 +11,34 @@ const Home = () => {
     dispatch(fetchCovidInfo());
   }, [dispatch]);
 
-  const { info, total } = useSelector((state) => state);
+  const { info, total, isLoading } = useSelector((state) => state);
 
   return (
     <Section>
       <h2>Covid Update in Nigeria</h2>
-      <p>Total Sample Tested : {total.totalSamplesTested}</p>
-      <p>Total Confirmed Cases : {total.totalConfirmedCases}</p>
-      <p>Total Active Cases : {total.totalActiveCases}</p>
-      <p>Total Discharged : {total.discharged}</p>
-      <p>Total Deaths : {total.death}</p>
-      <Cards>
-        {info.map((data) => (
-          <DataCard
-            key={data._id}
-            state={data.state}
-            confirmed={data.confirmedCases}
-            admission={data.casesOnAdmission}
-            discharged={data.discharged}
-            death={data.death}
-          />
-        ))}
-      </Cards>
+      {isLoading ? (
+        <h4>Loading...</h4>
+      ) : (
+        <>
+          <p>Total Sample Tested : {total.totalSamplesTested}</p>
+          <p>Total Confirmed Cases : {total.totalConfirmedCases}</p>
+          <p>Total Active Cases : {total.totalActiveCases}</p>
+          <p>Total Discharged : {total.discharged}</p>
+          <p>Total Deaths : {total.death}</p>
+          <Cards>
+            {info.map((data) => (
+              <DataCard
+                key={data._id}
+                state={data.state}
+                confirmed={data.confirmedCases}
+                admission={data.casesOnAdmission}
+                discharged={data.discharged}
+                death={data.death}
+              />
+            ))}
+          </Cards>
+        </>
+      )}
     </Section>
   );
 };
@@ -42,6 +48,9 @@ const Section = styled.section`
   min-height: 100vh;
   width: 100%;
 padding: 2rem;
+h4 {
+  margin-top: 5rem;
+}
  p {
   margin-top: 1rem;
  }
